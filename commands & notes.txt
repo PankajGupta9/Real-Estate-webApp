@@ -1,0 +1,58 @@
+To start reactjs project in using tailwind css and vite
+
+steps:-
+
+1- npm create vite@latest client
+2- then select react
+3- then select javascipt + SWC (because it is fast then normal JS)
+4- then enter in folder cd folder name
+5- npm i
+
+after that we have to consider tailwind css
+
+6- search tailwind using vite
+7- then copy the code  from the second step and go on till last step, and past over the terminal 
+
+
+after that you can add VS code extension if you want them
+
+8- if you want to add your code into github directory directly then 
+9- git init (to initialize the git)
+10-git add .
+11-git commit -m
+12- git commit -m "here you can add your specific comment".
+13- now you have to go into the github profile to create resository
+14- after creating of repository then you have to copy second paragraph command from git hub step by step then past over the  terminal to make a connection and push code over the github
+
+
+
+
+
+
+In a backent part
+
+1. first make folder for backend code
+2. then outside/root location  install the modules
+3. npm init -y
+4. npm i express
+5.npm i nodemon
+6.then set the "type": "module" in the package.json file other wise it will show error because you are using modules from outside the backend folder
+7.then set the script part so that you can start your backend server easly with npm run dev command "dev": nodemon (backend folder name)/(file name) 
+8.then set the script part so that you can start your backend server easly with npm run start withot help of nodemon command "start": node (backend folder name)/(file name) 
+9.then you should switch your client side to root directory for pushing the code on github then you have to use command
+10.in client folder you have to use command mv .git ../
+11. then you have to move your client side gitignor file to root direcory so you dont have to upload modules in repository
+
+
+
+
+
+
+
+
+
+
+
+
+
+
