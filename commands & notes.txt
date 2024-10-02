@@ -44,6 +44,12 @@ In a backent part
 11. then you have to move your client side gitignor file to root direcory so you dont have to upload modules in repository
 
 
+now time to make a  connection with mongodb database and install it
+
+1. "npm i mongoose express" in backend folder
+2. "npm i dotenv" to hide the credentials from public 
+
+
 
 
 
