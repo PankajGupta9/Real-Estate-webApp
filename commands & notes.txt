@@ -50,6 +50,11 @@ now time to make a  connection with mongodb database and install it
 2. "npm i dotenv" to hide the credentials from public 
 
 
+npm i bcryptjs
+npm i jsonwebtoken
+
+
+
 
 
 
