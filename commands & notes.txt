@@ -56,6 +56,18 @@ npm i jsonwebtoken
 
 
 
+for isntallling the redux toolkit and setup of redux
+
+1. search on google 'redux-toolkit' and go to on this site and click over quick setup then follow the all instruction  to setup reduc in application
+2. In setup of redux in application then you have to setup redux persist so that when you refresh the browser then data in redux devtool kit remain dont 
+  remove from there
+3. For that you have to install 'npm i react-persist'.  
+
+  
+
+
+
+
 
 
 
