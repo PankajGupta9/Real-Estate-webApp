@@ -63,6 +63,26 @@ for isntallling the redux toolkit and setup of redux
   remove from there
 3. For that you have to install 'npm i react-persist'.  
 
+
+
+
+
+
+For setup of online google login instruction
+1. first open firebase site then create a account if you dont have it 
+2. after login your account then you have to 'go to  in console'
+3. then mention your project name and create them
+4. after creation of project then go to in 'web(</>)'
+5. then create nick name 
+6. then copy  command for installaion of firebase in client side
+7. then copy the below code given in firebase site and create a new file in SRC folder with the name of firebase.js 
+    pase all code over there
+8.after that you have to add 'export' keyword in firebse.js file before the 'app' so that you can use it in application everywhere
+9.then you have to hide API Key in firebse file due to security reason then you have to create new '.env' file in src folder i client side
+  then you have to hide your apikey 
+10. after that you have to add 'import.env.variable_name' in which you store the apikey 
+11. after that you have to go on firebase site then click over authentication option complete the furhter procedure   
+
   
 
 
