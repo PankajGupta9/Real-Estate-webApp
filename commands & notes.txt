@@ -87,6 +87,13 @@ For setup of online google login instruction
 
 
 
+for user authrization you have to install cookie parser
+
+1. npm i cookie-parser 
+2. then you have to import and initialize it in index.js file 
+3. like "app.use(cookieParser());"
+
+
 
 
 
