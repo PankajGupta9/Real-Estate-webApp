@@ -1,10 +1,12 @@
 import express from 'express';
-import {test,updateUser} from '../controllers/user.controller.js';
+import {deleteUser, test,updateUser} from '../controllers/user.controller.js';
 import { verifyToken } from '../utils/varifyUser.js';
+import upload from '../middleware/uploadMiddleware.js';
 
 const router = express.Router();
 
 router.get('/test', test);
-router.post('/update/:id',verifyToken, updateUser)
+router.put('/update/:id',verifyToken, updateUser)
+router.delete('/delete/:id',verifyToken, deleteUser)
 
 export default router;

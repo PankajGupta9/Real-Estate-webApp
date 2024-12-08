@@ -15,13 +15,12 @@ const SignIn = () => {
       ...formData,
       [e.target.id]: e.target.value,
      });
-  };
-
-  const handleSubmit = async (e) => {
+  }; 
+  const handleSubmit =  async (e) => {
     e.preventDefault();
     dispatch(signInStart());
     try{
-      const res = await fetch('api/auth/signin',
+      const res = await fetch('http://localhost:3000/api/auth/signin',
         {
           method: 'POST',
           headers: {

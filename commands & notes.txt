@@ -69,6 +69,7 @@ for isntallling the redux toolkit and setup of redux
 
 
 For setup of online google login instruction
+
 1. first open firebase site then create a account if you dont have it 
 2. after login your account then you have to 'go to  in console'
 3. then mention your project name and create them
