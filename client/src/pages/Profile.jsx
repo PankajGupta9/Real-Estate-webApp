@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from "axios";
 import { useRef, useState, useEffect } from 'react';
+import {Link} from 'react-router-dom';
 import { 
   updateUserStart, 
   updateUserFailure, 
@@ -11,6 +12,9 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
+  signOutUserStart,
+  signOutUserFailure,
+  signOutUserSuccess,
 
 } from '../redux/user/userSlice';
 
@@ -95,7 +99,9 @@ const Profile = () => {
       toast.error("Failed to update profile.", { theme: "dark" });
     }
   };
-  const userId = currentUser._id; // Replace 'currentUser.id' with how you're getting the user's ID
+
+
+  const userId = currentUser?.rest._id; // Replace 'currentUser.id' with how you're getting the user's ID
   // console.log('User ID:', userId); // Check if this outputs the correct ID
 
   const handleDeleteUser = async () => {
@@ -103,6 +109,9 @@ const Profile = () => {
      dispatch(deleteUserStart());
      const res = await fetch(`http://localhost:3000/api/user/delete/${userId}`,{
       method: 'DELETE',
+      headers: { Authorization: `Bearer ${currentUser?.token}` },
+
+
 
     });
      const data = await res.json();
@@ -116,12 +125,32 @@ const Profile = () => {
     }
   }
 
-  const handleLogout = () => {
-    localStorage.clear();
-    toast.info("Logged out successfully!", { theme: "dark" });
-    window.location.href = "/login";
-  };
-  
+
+  //this way code suggestion by chatGPT and bhai
+  // const handleLogout = () => {
+  //   localStorage.clear();
+  //   toast.info("Logged out successfully!", { theme: "dark" });
+  //   window.location.href = "/login";    
+  // };
+
+   
+      // code suggestion by sahand
+  const handleLogout = async () => {
+    try{
+  dispatch(signOutUserStart());
+  const res = await  fetch('/api/auth/signout');
+  const data = await res.json();
+  if(data.success === false){
+    dispatch(signOutUserFailure(data.message));
+    return;
+  }
+  dispatch(signOutUserSuccess(data));
+  }catch(error){
+    dispatch(signOutUserFailure(data.message));    
+  }
+}
+
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -169,6 +198,10 @@ const Profile = () => {
         >
           Update
         </button>
+
+        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
+          Create Listing
+        </Link>
       </form>
       <div className='flex justify-between mt-5'>
         <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
