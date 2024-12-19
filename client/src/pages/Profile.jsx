@@ -20,13 +20,20 @@ import {
 
 const Profile = () => {
   const fileRef = useRef(null);
-  const { currentUser } = useSelector((state) => state.user);
+  const { currentUser, loading, error } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [previewImage, setPreviewImage] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
+  const [updateSuccess, setUpdateSuccess] = useState(false);
+  const [showListingsError, setShowListingsError] = useState(false);
+  const [listings, setListings] = useState([]);
+  const [showListings, setShowListings] = useState(false);
+
+
+
 
   // Initialize state with currentUser data
   useEffect(() => {
@@ -83,6 +90,7 @@ const Profile = () => {
       avatar: avatarUrl,
       ...(password && { password }), // Add password only if provided
     };
+    console.log('Data being sent:', userUpdateData);
 
     try {
       dispatch(updateUserStart());
@@ -90,8 +98,9 @@ const Profile = () => {
         headers: { Authorization: `Bearer ${currentUser?.token}` },
         
       });
-      // console.log(res);
+      console.log('Response:', res.data); // Ensure email is updated in response
       dispatch(updateUserSuccess(res.data));
+      setUpdateSuccess(true)
       toast.success("Profile updated successfully!", { theme: "dark" });
     } catch (error) {
       dispatch(updateUserFailure(error.message));
@@ -105,26 +114,30 @@ const Profile = () => {
   // console.log('User ID:', userId); // Check if this outputs the correct ID
 
   const handleDeleteUser = async () => {
-    try{
-     dispatch(deleteUserStart());
-     const res = await fetch(`http://localhost:3000/api/user/delete/${userId}`,{
-      method: 'DELETE',
-      headers: { Authorization: `Bearer ${currentUser?.token}` },
-
-
-
-    });
-     const data = await res.json();
-     if(data.success === false){
-      dispatch(deleteUserFailure(data.message));
-      return;
-     }
-     dispatch(deleteUserSuccess(data))
-    }catch(error){
-     dispatch(deleteUserFailure(error.message));
+    try {
+      dispatch(deleteUserStart());
+  
+      const res = await axios.delete(`http://localhost:3000/api/user/delete/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${currentUser?.token}`,
+        },
+      });
+  
+      const data = res.data; // Axios stores the response data in 'data'
+  
+      if (data.success === false) {
+        dispatch(deleteUserFailure(data.message));
+        return;
+      }
+  
+      dispatch(deleteUserSuccess(data));
+    } catch (error) {
+      dispatch(deleteUserFailure(
+        error.response ? error.response.data.message : error.message
+      ));
     }
-  }
-
+  };
+  
 
   //this way code suggestion by chatGPT and bhai
   // const handleLogout = () => {
@@ -134,7 +147,6 @@ const Profile = () => {
   // };
 
    
-      // code suggestion by sahand
   const handleLogout = async () => {
     try{
   dispatch(signOutUserStart());
@@ -149,6 +161,23 @@ const Profile = () => {
     dispatch(signOutUserFailure(data.message));    
   }
 }
+
+
+
+const fetchListings = async () => {
+  try {
+    const res = await axios.get(`http://localhost:3000/api/user/listings/${currentUser?.rest._id}`, {
+      headers: { Authorization: `Bearer ${currentUser?.token}` },
+    });
+
+
+    setListings(res.data);
+    setShowListings(true);
+  } catch (error) {
+    setShowListingsError(true);
+    alert("Failed to fetch listings. Please try again.");
+  }
+};
 
 
   return (
@@ -188,7 +217,7 @@ const Profile = () => {
           type="password"
           placeholder="Password"
           id="password"
-          // value={password}
+          value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="border p-3 rounded-lg"
         />
@@ -207,6 +236,65 @@ const Profile = () => {
         <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
         <span onClick={handleLogout} className='text-red-700 cursor-pointer'>Sign Out</span>
       </div>
+
+      <p className='text-red-700 mt-5'>{error ? error : ''}</p>
+      <p>
+        {updateSuccess ? 'User is updated successfully!' : ''}
+      </p>
+      <button
+  onClick={fetchListings}
+  className="p-3 bg-blue-600 text-white rounded-lg uppercase hover:opacity-75 w-full"
+>
+  Show Listings
+</button>
+<p className='text-red-700 mt-5'>
+  {showListingsError ? 'Error to showing listing !' : ''}
+</p>
+
+
+{showListings && (
+  <div className="flex flex-col gap-4">
+    <h2 className="text-center mt-7 text-2xl font-semibold">
+    Listings
+    </h2>
+      {listings.map((listing) => (
+        <div key={listing._id} className="border  p-3 rounded-lg flex justify-between items-center gap-8">
+          <Link to={`/listing/${listing._id}`}>
+                <img
+                  src={listing.imageUrls[0]}
+                  alt='listing cover'
+                  className='h-16 w-16 object-contain'
+                />
+              </Link>
+              <Link className="text-slate-700 font-semibold flex-1 hover:underline truncate" 
+                    to={`/listing/${listing._id}`}>
+              <p>
+              {listing.name}
+              </p>
+              </Link>
+
+              <div className='flex flex-col items-center '>
+                <button className='text-red-700 uppercase'>
+                  Delete
+                </button>
+                <button className='text-green-700 uppercase'>
+                  Edit
+                </button>
+              </div>
+   
+
+
+          {/* <p>{listing.description}</p> */}
+          {/* <p>Type: {listing.type}</p>
+          <p>Bedrooms: {listing.bedrooms}</p>
+          <p>Bathrooms: {listing.bathrooms}</p>
+          <p>Price: ${listing.regularPrice}</p> */}
+        </div>
+      ))}
+    </div>
+
+)}
+
     </div>
   );
 };
