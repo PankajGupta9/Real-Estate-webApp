@@ -154,14 +154,16 @@ const UpdateListing = () => {
       const res = await axios.post(`http://localhost:3000/api/listing/update/${listingId}`,listingData,{
         headers: { Authorization: `Bearer ${currentUser?.token}` },
       });
-      alert("Product created successfully");
+      alert("Product updated successfully");
       setLoading(false);
-      window.location.reload(); // Refresh the page
+      navigate(`/listing/${listingId}`);
+
+      // window.location.reload(); // Refresh the page
 
       if (!res.data.success) {
         return setError(res.data.message);
       }
-  
+
     }catch (error){
       setError(error.message);
       setLoading(false);

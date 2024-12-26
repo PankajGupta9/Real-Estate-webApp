@@ -90,7 +90,6 @@ const Profile = () => {
       avatar: avatarUrl,
       ...(password && { password }), // Add password only if provided
     };
-    console.log('Data being sent:', userUpdateData);
 
     try {
       dispatch(updateUserStart());
@@ -98,13 +97,11 @@ const Profile = () => {
         headers: { Authorization: `Bearer ${currentUser?.token}` },
         
       });
-      console.log('Response:', res.data); // Ensure email is updated in response
       dispatch(updateUserSuccess(res.data));
       setUpdateSuccess(true)
       toast.success("Profile updated successfully!", { theme: "dark" });
     } catch (error) {
       dispatch(updateUserFailure(error.message));
-      console.error("Update Error:", error);
       toast.error("Failed to update profile.", { theme: "dark" });
     }
   };
@@ -180,6 +177,19 @@ const fetchListings = async () => {
 };
 
 
+
+const handleListingDelete = async (listingId) => {
+  try{
+   const res = await axios.delete(`/api/listing/delete/${listingId}`,{
+    headers: { Authorization: `Bearer ${currentUser?.token}` },
+   });
+   setListings((prev) => prev.filter((listing) => listing._id !== listingId));
+  }catch(error){
+    console.log(error.message  )
+  }
+}
+
+
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
@@ -242,14 +252,14 @@ const fetchListings = async () => {
         {updateSuccess ? 'User is updated successfully!' : ''}
       </p>
       <button
-  onClick={fetchListings}
-  className="p-3 bg-blue-600 text-white rounded-lg uppercase hover:opacity-75 w-full"
->
-  Show Listings
-</button>
-<p className='text-red-700 mt-5'>
-  {showListingsError ? 'Error to showing listing !' : ''}
-</p>
+           onClick={fetchListings}
+           className="p-3 bg-blue-600 text-white rounded-lg uppercase hover:opacity-75 w-full"
+      >
+      Show Listings
+      </button>
+      <p className='text-red-700 mt-5'>
+      {showListingsError ? 'Error to showing listing !' : ''}
+      </p>
 
 
 {showListings && (
@@ -274,12 +284,14 @@ const fetchListings = async () => {
               </Link>
 
               <div className='flex flex-col items-center '>
-                <button className='text-red-700 uppercase'>
+                <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase hover:opacity-85'>
                   Delete
                 </button>
-                <button className='text-green-700 uppercase'>
+                <Link to={`/update-listing/${listing._id}`}>
+                <button  className='text-green-700 uppercase hover:opacity-85'>
                   Edit
                 </button>
+                </Link>
               </div>
    
 

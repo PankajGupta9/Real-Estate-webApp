@@ -30,9 +30,6 @@ const SignIn = () => {
         }
       );
       const data = await res.json();
-      // if (data.token) {
-      //   localStorage.setItem('token', data.token);
-      // }
           if(data.success === false) {
         dispatch(signInFailure(data.message));
         return;

@@ -1,45 +1,38 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import userRouter from './routes/user.route.js';
-import authRouter from './routes/auth.route.js';
-import cookieParser from 'cookie-parser';
-
-const app = express();
-app.use(cors());
-dotenv.config();
+// import { errorHandler } from "./utils/error";
 
 
 
-//datbase connection
-mongoose
-     .connect(process.env.MONGO)
-     .then(() => {
-        console.log('connected to MongoDb !');
-     })
-     .catch((err) => {
-        console.log(err);
-     });
 
+// export const updatedUser = async(req,res,next) => {
+//    try{
+//       const userId = req.params.id;
 
-     app.use(express.json());
-     app.use(cookieParser());
+//       const existingUser = await userId.findById(userId);
+//       if(!existingUser){
+//          return res.status(404).json({error: 'user not found'});
+//       }
 
-     //server initialization
-     app.listen(3000, () => {
-        console.log('server is running on port 3000');
-     });
+//       const {username,email, password, avatar} = req.body;
 
-     app.use('/api/user',userRouter);
-     app.use('/api/auth',authRouter);
+//       const updates = {
+//          username:username || existingUser.username,
+//          email: email || existingUser.email,
+//          avatar: avatar || existingUser.avatar,
+//          password: password ? bcryptjs.hashSync(password, 10) : existingUser.password,                               
+//       };
 
-     //middleware to handle errors globally
-     app.use((err, req, res , next)=> {
-        const statusCode = err.statusCode || 500;
-        const message = err.message || 'Internal server error';
-        return res.status(statusCode.json({
-            success:false,
-            statusCode,
-            message,
-        }))
-     })
+//       const updatedUser = await User.findByIdAndUpdate(userId, {$set: updates}, {new:true});
+
+//       if(!updatedUser){
+//          return next(errorHandler(404, 'user not found after update'));
+//       }
+
+//       const token = jwt.sign({id: updatedUser._id}, process.env.JWT_SECRET);
+
+//       const {password:pass, ...rest} = updatedUser._doc;
+//       res.status(200).json({rest, token});
+//    }catch(error){
+//       console.log('internal server error', error);
+//       res.status(500).json({error: 'Internal server error'});
+//    }
+// };

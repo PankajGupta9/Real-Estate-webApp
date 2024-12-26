@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSelector } from 'react-redux';
 import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const CreateListing = () => {
   const [files, setFiles] = useState([]);
@@ -30,8 +31,9 @@ const CreateListing = () => {
   // console.log(formData);
 
   // Cloudinary configuration
-  const cloudName = import.meta.env.VITE_CLOUD_NAME;
   const uploadPreset = "IBM_Project";
+  const cloudName = import.meta.env.VITE_CLOUD_NAME;
+  const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
 
   const handleImageSubmit = async (e) => {
     e.preventDefault();
@@ -49,8 +51,7 @@ const CreateListing = () => {
       formData.append("file", files[i]);
       formData.append("upload_preset", uploadPreset);
 
-      promises.push(
-        axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/upload`, formData)
+      promises.push(axios.post(uploadUrl, formData)
       );
     }
 
@@ -118,7 +119,7 @@ const CreateListing = () => {
     try{
       const listingData = {
         ...formData,
-        imageUrls: uploadedImages.length ? uploadedImages : formData.imageUrls,
+        imageUrls: [...uploadedImages], // Combine uploaded images
         userRef: currentUser?.rest._id,
       };
       
@@ -134,8 +135,9 @@ const CreateListing = () => {
         headers: { Authorization: `Bearer ${currentUser?.token}` },
       });
       alert("Product created successfully");
-      console.log('API response:', res);
       setLoading(false);
+      window.location.reload(); // Refresh the page
+
       if (!res.data.success) {
         return setError(res.data.message);
       }
@@ -146,7 +148,6 @@ const CreateListing = () => {
     }
 
   }
-
 
 
 
@@ -333,7 +334,8 @@ const CreateListing = () => {
           <p className="text-red-700 text-sm">{imageUploadError && imageUploadError}</p>
 
           <div className="flex flex-col gap-2 mt-4">
-            {uploadedImages.map((url, index) => (
+            {uploadedImages.length > 0 ? (
+                uploadedImages.map((url, index) => (
               <div key={url}  className="flex justify-between items-center border p-3 rounded-lg">
                 <img
                   src={url}
@@ -347,7 +349,12 @@ const CreateListing = () => {
                   Delete
                 </button>
               </div>
-            ))}
+            ))
+            ):(
+                <p className="text-gray-500">No images uploaded.</p>
+            )
+            }
+
             <button
                 disabled={loading || uploading}
                 type="submit"

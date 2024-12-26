@@ -13,6 +13,16 @@ after that we have to consider tailwind css
 6- search tailwind using vite
 7- then copy the code  from the second step and go on till last step, and past over the terminal 
 
+important packages
+
+1. 'npm i swiper' this is for swipe the images
+       import {Swiper,SwiperSlide} from 'swiper/react';
+      import SwiperCore from 'swiper';
+      import {Navigation} from 'swiper/modules';
+      import 'swiper/css/bundle';
+
+
+
 
 after that you can add VS code extension if you want them
 
