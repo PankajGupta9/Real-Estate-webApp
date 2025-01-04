@@ -1,11 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {MdLocationOn} from 'react-icons/md';
+import {
+    FaBath,
+    FaBed,
+    FaChair,
+    FaMapMarkedAlt,
+    FaMapMarkerAlt,
+    FaParking,
+    FaShare,
+  } from 'react-icons/fa';
+  
 
 const ListingItem = ({listing}) => {
   return (
-    <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
-      <Link to={`/listing/${listing._id}`}>
+<div className="bg-white border border-gray-500 shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]">
+<Link to={`/listing/${listing._id}`}>
        <img 
          src={listing.imageUrls[0]} 
          alt='listing cover' 
@@ -19,25 +29,39 @@ const ListingItem = ({listing}) => {
                     {listing.address}
                 </p>
             </div>
-            <p className='text-sm text-gray-600 line-clamp-2'>
+            <p className='text-sm text-gray-600 line-clamp-2 '>
             {listing.description}
             </p>
-            
-            <p className='text-slate-500 mt-2 font-semibold'>
+            <span className='border-b border-gray-300 my-3'></span>
+            <div className='flex justify-between'>
+            <ul className='text-slate-600 font-semibold text-sm flex flex-wrap items-center sm:gap-6'>
+              <li className='flex items-center gap-1 whitespace-nowrap '>
+                <FaBed className='text-lg' />
+                {listing.bedrooms > 1
+                  ? `Beds ${listing.bedrooms}`
+                  : `Bed ${listing.bedrooms}`}
+              </li>
+              <li className='flex items-center gap-1  whitespace-nowrap '>
+                <FaBath className='text-lg' />
+                {listing.bathrooms > 1
+                  ? `Baths ${listing.bathrooms}`
+                  : `Bath ${listing.bathrooms}`}
+              </li>
+             </ul> 
+
+             <p className='text-red-700 mt-2 font-semibold'>
             $
             {listing.offer ? listing.discountPrice.
               toLocaleString('en-US') : listing.regularPrice.
               toLocaleString('en-US')}
               {listing.type === 'rent' && ' / month'}
             </p>
-            <div className='text-slate-700 flex gap-4'>
-                <div className='font-bold text-xs'>
-                {listing.bedrooms > 1 ? `${listing.bedrooms} Beds` : `${listing.bedrooms} Bed`}
-                </div>
-                <div className='font-bold text-xs'>
-                {listing.bathrooms > 1 ? `${listing.bathrooms} Bath` : `${listing.bathrooms} Bath`}
-                </div>
+
+
             </div>
+
+
+
          </div>
       </Link>
     </div>

@@ -151,7 +151,7 @@ const UpdateListing = () => {
       setLoading(true);
       setError(false);
       const listingId=params.listingId;
-      const res = await axios.post(`http://localhost:3000/api/listing/update/${listingId}`,listingData,{
+      const res = await axios.post(`/api/listing/update/${listingId}`,listingData,{
         headers: { Authorization: `Bearer ${currentUser?.token}` },
       });
       alert("Product updated successfully");

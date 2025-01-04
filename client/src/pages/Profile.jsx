@@ -1,5 +1,3 @@
-
-
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import axios from "axios";
@@ -93,7 +91,7 @@ const Profile = () => {
 
     try {
       dispatch(updateUserStart());
-      const res = await axios.put(`http://localhost:3000/api/user/update/${currentUser?.rest?._id}`, userUpdateData, {
+      const res = await axios.put(`/api/user/update/${currentUser?.rest?._id}`, userUpdateData, {
         headers: { Authorization: `Bearer ${currentUser?.token}` },
         
       });
@@ -114,7 +112,7 @@ const Profile = () => {
     try {
       dispatch(deleteUserStart());
   
-      const res = await axios.delete(`http://localhost:3000/api/user/delete/${userId}`, {
+      const res = await axios.delete(`/api/user/delete/${userId}`, {
         headers: {
           Authorization: `Bearer ${currentUser?.token}`,
         },
@@ -163,11 +161,9 @@ const Profile = () => {
 
 const fetchListings = async () => {
   try {
-    const res = await axios.get(`http://localhost:3000/api/user/listings/${currentUser?.rest._id}`, {
+    const res = await axios.get(`/api/user/listings/${currentUser?.rest._id}`, {
       headers: { Authorization: `Bearer ${currentUser?.token}` },
     });
-
-
     setListings(res.data);
     setShowListings(true);
   } catch (error) {
@@ -191,126 +187,145 @@ const handleListingDelete = async (listingId) => {
 
 
   return (
-    <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
-      <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <input
-          type="file"
-          ref={fileRef}
-          hidden
-          accept="image/*"
-          onChange={handleFileChange}
-        />
-        <img
-          onClick={() => fileRef.current.click()}
-          src={previewImage || 'https://via.placeholder.com/150'}
-          alt="profile"
-          className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
-        />
-        <input
-          type="text"
-          placeholder="Username"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className="border p-3 rounded-lg"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="border p-3 rounded-lg"
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="border p-3 rounded-lg"
-        />
+      <div className="p-3 max-w-lg mx-auto bg-white rounded-lg mx-15  overflow-y-auto">
+        <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
+          <input
+            type="file"
+            ref={fileRef}
+            hidden
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+          <img
+            onClick={() => fileRef.current.click()}
+            src={previewImage || "https://via.placeholder.com/150"}
+            alt="profile"
+            className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
+          />
+          <input
+            type="text"
+            placeholder="Username"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            className="border p-3 rounded-lg"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="border p-3 rounded-lg"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="border p-3 rounded-lg"
+          />
+          <button
+            type="submit"
+            className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95"
+          >
+            Update
+          </button>
+
+          <Link
+            className="bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95"
+            to={"/create-listing"}
+          >
+            Create Listing
+          </Link>
+        </form>
+        <div className="flex justify-between mt-5">
+          <span
+            onClick={handleDeleteUser}
+            className="text-red-700 cursor-pointer"
+          >
+            Delete Account
+          </span>
+          <span onClick={handleLogout} className="text-red-700 cursor-pointer">
+            Sign Out
+          </span>
+        </div>
+
+        <p className="text-red-700 mt-5">{error ? error : ""}</p>
+        <p>{updateSuccess ? "User is updated successfully!" : ""}</p>
         <button
-          type="submit"
-          className="bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95"
+          onClick={fetchListings}
+          className="p-3 bg-blue-600 text-white rounded-lg uppercase hover:opacity-75 w-full"
         >
-          Update
+          Show Listings
         </button>
+        <p className="text-red-700 mt-5">
+          {showListingsError ? "Error to showing listing !" : ""}
+        </p>
 
-        <Link className='bg-green-700 text-white p-3 rounded-lg uppercase text-center hover:opacity-95' to={"/create-listing"}>
-          Create Listing
-        </Link>
-      </form>
-      <div className='flex justify-between mt-5'>
-        <span onClick={handleDeleteUser} className='text-red-700 cursor-pointer'>Delete Account</span>
-        <span onClick={handleLogout} className='text-red-700 cursor-pointer'>Sign Out</span>
-      </div>
-
-      <p className='text-red-700 mt-5'>{error ? error : ''}</p>
-      <p>
-        {updateSuccess ? 'User is updated successfully!' : ''}
-      </p>
-      <button
-           onClick={fetchListings}
-           className="p-3 bg-blue-600 text-white rounded-lg uppercase hover:opacity-75 w-full"
-      >
-      Show Listings
-      </button>
-      <p className='text-red-700 mt-5'>
-      {showListingsError ? 'Error to showing listing !' : ''}
-      </p>
-
-
-{showListings && (
-  <div className="flex flex-col gap-4">
-    <h2 className="text-center mt-7 text-2xl font-semibold">
-    Listings
-    </h2>
-      {listings.map((listing) => (
-        <div key={listing._id} className="border  p-3 rounded-lg flex justify-between items-center gap-8">
-          <Link to={`/listing/${listing._id}`}>
-                <img
-                  src={listing.imageUrls[0]}
-                  alt='listing cover'
-                  className='h-16 w-16 object-contain'
-                />
-              </Link>
-              <Link className="text-slate-700 font-semibold flex-1 hover:underline truncate" 
-                    to={`/listing/${listing._id}`}>
-              <p>
-              {listing.name}
-              </p>
-              </Link>
-
-              <div className='flex flex-col items-center '>
-                <button onClick={()=>handleListingDelete(listing._id)} className='text-red-700 uppercase hover:opacity-85'>
-                  Delete
-                </button>
-                <Link to={`/update-listing/${listing._id}`}>
-                <button  className='text-green-700 uppercase hover:opacity-85'>
-                  Edit
-                </button>
+        {showListings && (
+          <div className="flex flex-col gap-4">
+            <h2 className="text-center mt-7 text-2xl font-semibold">
+              Listings
+            </h2>
+            {listings.map((listing) => (
+              <div
+                key={listing._id}
+                className="border  p-3 rounded-lg flex justify-between items-center gap-8"
+              >
+                <Link to={`/listing/${listing._id}`}>
+                  <img
+                    src={listing.imageUrls[0]}
+                    alt="listing cover"
+                    className="h-16 w-16 object-contain"
+                  />
                 </Link>
-              </div>
-   
+                <Link
+                  className="text-slate-700 font-semibold flex-1 hover:underline truncate"
+                  to={`/listing/${listing._id}`}
+                >
+                  <p>{listing.name}</p>
+                </Link>
 
+                <div className="flex flex-col items-center ">
+                  <button
+                    onClick={() => handleListingDelete(listing._id)}
+                    className="text-red-700 uppercase hover:opacity-85"
+                  >
+                    Delete
+                  </button>
+                  <Link to={`/update-listing/${listing._id}`}>
+                    <button className="text-green-700 uppercase hover:opacity-85">
+                      Edit
+                    </button>
+                  </Link>
+                </div>
 
-          {/* <p>{listing.description}</p> */}
-          {/* <p>Type: {listing.type}</p>
+                {/* <p>{listing.description}</p> */}
+                {/* <p>Type: {listing.type}</p>
           <p>Bedrooms: {listing.bedrooms}</p>
           <p>Bathrooms: {listing.bathrooms}</p>
           <p>Price: ${listing.regularPrice}</p> */}
-        </div>
-      ))}
-    </div>
-
-)}
-
-    </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
   );
 };
 
 
 export default Profile;
+
+
+
+
+
+
+
+
+
+
 

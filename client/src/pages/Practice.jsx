@@ -216,6 +216,116 @@ export default Practice;
 
 
 
+// import React, { useState, useEffect } from 'react';
+// import { FaSearch } from 'react-icons/fa';
+// import { Link, useNavigate } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import newLogo from '../assets/newLogo.png';
+// import { CiUser } from "react-icons/ci";
+
+// const Header = () => {
+//   const { currentUser } = useSelector(state => state.user);
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [dropdownVisible, setDropdownVisible] = useState(false);
+//   const navigate = useNavigate();
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     const urlParams = new URLSearchParams(window.location.search);
+//     urlParams.set('searchTerm', searchTerm);
+//     const searchQuery = urlParams.toString();
+//     navigate(`/search?${searchQuery}`);
+//   };
+
+//   useEffect(() => {
+//     const urlParams = new URLSearchParams(location.search);
+//     const searchTermFromUrl = urlParams.get('searchTerm');
+//     if (searchTermFromUrl) {
+//       setSearchTerm(searchTermFromUrl);
+//     }
+//   }, [location.search]);
+
+//   const handleProfileClick = () => {
+//     setDropdownVisible(!dropdownVisible); // Toggle dropdown visibility
+//   };
+
+//   const handleProfileRedirect = () => {
+//     navigate('/profile'); // Redirect to profile page
+//   };
+
+//   return (
+//     <header className='bg-white shadow-md top-0 z-20 sticky'>
+//       <div className='flex justify-between items-center max-w-6xl mx-auto p-3'>
+//         <Link to='/'>
+//           <img className='w-[150px] h-[55px] md:w-15' src={newLogo} alt="logoDark" />
+//         </Link>
+//         <ul className='flex gap-4 items-center'>
+//           <Link to='/'>
+//             <li className='hidden sm:inline text-slate-700 font-semibold hover:opacity-75'>
+//               HOME
+//             </li>
+//           </Link>
+//           <Link to='/about'>
+//             <li className='hidden sm:inline text-slate-700 font-semibold hover:opacity-75'>
+//               ABOUT
+//             </li>
+//           </Link>
+//           <Link to='/contact'>
+//             <li className='hidden sm:inline text-slate-700 font-semibold hover:opacity-75'>
+//               CONTACT
+//             </li>
+//           </Link>
+//           <div className="relative">
+//             <div onClick={handleProfileClick} className="cursor-pointer">
+//               {currentUser ? (
+//                 <img className='rounded-full h-7 w-7 object-cover' src={currentUser.avatar} alt="Profile" />
+//               ) : (
+//                 <li className="flex gap-1 items-center bg-white px-6 py-3 border border-blue-700 rounded-3xl 
+//                   text-slate-700 font-semibold hover:bg-blue-600 hover:text-white hover:opacity-75 
+//                    cursor-pointer transition duration-300">
+//                   <CiUser className='h-6 w-6' />
+//                   Sign in
+//                 </li>
+//               )}
+//             </div>
+//             {dropdownVisible && (
+//               <div className="absolute right-0 mt-2 w-48 bg-white shadow-lg rounded-md p-2">
+//                 <ul>
+//                   <li onClick={handleProfileRedirect} className="text-slate-700 py-2 hover:bg-blue-100 cursor-pointer">Your Profile</li>
+//                   <li className="text-slate-700 py-2 hover:bg-blue-100 cursor-pointer">Favorites</li>
+//                   <li className="text-slate-700 py-2 hover:bg-blue-100 cursor-pointer">List Property</li>
+//                   <li className="text-slate-700 py-2 hover:bg-blue-100 cursor-pointer">Dashboard</li>
+//                 </ul>
+//               </div>
+//             )}
+//           </div>
+//         </ul>
+//       </div>
+//     </header>
+//   );
+// };
+
+// export default Header;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

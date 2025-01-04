@@ -3,6 +3,8 @@ import axios from "axios";
 import { useSelector } from 'react-redux';
 import { Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { MdOutlineDeleteSweep } from "react-icons/md";
+
 
 const CreateListing = () => {
   const [files, setFiles] = useState([]);
@@ -131,7 +133,7 @@ const CreateListing = () => {
       }
       setLoading(true);
       setError(false);
-      const res = await axios.post('http://localhost:3000/api/listing/create',listingData,{
+      const res = await axios.post('/api/listing/create',listingData,{
         headers: { Authorization: `Bearer ${currentUser?.token}` },
       });
       alert("Product created successfully");
@@ -153,13 +155,14 @@ const CreateListing = () => {
 
 
   return (
-    <main className="p-3 max-w-4xl mx-auto">
+    <main className="p-4   bg-white rounded-lg   ">
       <h1 className="text-3xl font-semibold text-center my-7">Create Listing</h1>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <div className="flex flex-col gap-4 flex-1">
+        <label className="text-bold text-slate-950 text-sm" htmlFor="">Title:*</label>
           <input
             type="text"
-            placeholder="Name"
+            placeholder="Enter your Property title"
             className="border p-3 rounded-lg"
             id="name"
             maxLength="62"
@@ -168,8 +171,9 @@ const CreateListing = () => {
             onChange={handleChange}
             value={formData.name}
           />
+          <label className="text-bold text-slate-950 text-sm" htmlFor="">Description:*</label>
           <textarea
-            placeholder="Description"
+            placeholder="Your Description"
             className="border p-3 rounded-lg"
             id="description"
             required
@@ -177,9 +181,10 @@ const CreateListing = () => {
             value={formData.description}
 
           />
+          <label className="text-bold text-slate-950 text-sm" htmlFor="">Address:*</label>
           <input
             type="text"
-            placeholder="Address"
+            placeholder="Enter Your Address"
             className="border p-3 rounded-lg"
             id="address"
             required
@@ -326,44 +331,49 @@ const CreateListing = () => {
             <button
               onClick={handleImageSubmit}
               disabled={uploading}
-              className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              className="p-3 text-white bg-blue-500 border  rounded-lg uppercase hover:opacity-75 disabled:opacity-80"
             >
             {uploading ? 'Uploading...' : 'Upload'}
             </button>
           </div>
           <p className="text-red-700 text-sm">{imageUploadError && imageUploadError}</p>
 
-          <div className="flex flex-col gap-2 mt-4">
-            {uploadedImages.length > 0 ? (
-                uploadedImages.map((url, index) => (
-              <div key={url}  className="flex justify-between items-center border p-3 rounded-lg">
-                <img
-                  src={url}
-                  alt={`Uploaded ${index + 1}`}
-                  className="w-20 h-20 object-contain rounded-lg"
-                />
-                <button
-                  onClick={() => handleDeleteImage(url)}
-                  className="p-1 text-red-600 border border-red-600 uppercase rounded hover:opacity-95"
-                >
-                  Delete
-                </button>
-              </div>
-            ))
-            ):(
-                <p className="text-gray-500">No images uploaded.</p>
-            )
-            }
-
-            <button
+          <div className="flex gap-2 mt-4 border-2 border-slate-200 overflow-x-auto">
+  {uploadedImages.length > 0 ? (
+    uploadedImages.map((url, index) => (
+      <div
+        key={url}
+        className="relative flex items-center justify-center border p-3 rounded-lg"
+        style={{ width: '200px', height: '200px' }} // Ensures consistent size
+      >
+        <div className="w-full h-full border-2">
+          <img
+            src={url}
+            alt={`Uploaded ${index + 1}`}
+            className="w-full h-full object-cover rounded-lg"
+          />
+        </div>
+        <button
+          onClick={() => handleDeleteImage(url)}
+          className="absolute top-2 right-2 p-1  text-red-600 rounded-full hover:opacity-75"
+        >
+          <MdOutlineDeleteSweep className="text-xl" />
+        </button>
+      </div>
+    ))
+  ) : (
+    <p>No images uploaded.</p>
+  )}
+</div>
+          <button
                 disabled={loading || uploading}
                 type="submit"
-                className="p-3 bg-slate-700 text-white rounded-lg uppercase hover:opacity-75"
+                className="p-3  bg-blue-500 text-white rounded-lg uppercase hover:opacity-75"
                 >
                 {loading ? 'Creating...' : 'Create listing'}
             </button>
             {error && <p className="text-red-700 text-sm">{error}</p>}
-          </div>
+
         </div>
       </form>
     </main>
@@ -371,28 +381,6 @@ const CreateListing = () => {
 };
 
 export default CreateListing;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

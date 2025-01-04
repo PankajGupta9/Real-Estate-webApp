@@ -15,11 +15,15 @@ after that we have to consider tailwind css
 
 important packages
 
-1. 'npm i swiper' this is for swipe the images
+1. 'npm i swiper' this is for swipe the banner images 
+       then i have to import these things in frontend part
        import {Swiper,SwiperSlide} from 'swiper/react';
       import SwiperCore from 'swiper';
       import {Navigation} from 'swiper/modules';
       import 'swiper/css/bundle';
+
+      after that i have to initialize the swiper before the function name
+      SwiperCore.use([Navigation]);
 
 
 
@@ -46,9 +50,18 @@ In a backent part
 3. npm init -y
 4. npm i express
 5.npm i nodemon
-6.then set the "type": "module" in the package.json file other wise it will show error because you are using modules from outside the backend folder
+6.then set the "type": "module" in the package.json file other wise it will show error 
 7.then set the script part so that you can start your backend server easly with npm run dev command "dev": nodemon (backend folder name)/(file name) 
 8.then set the script part so that you can start your backend server easly with npm run start withot help of nodemon command "start": node (backend folder name)/(file name) 
+   example :-
+     "main": "index.js",
+    "type": "module",
+     "scripts": {
+    "dev": "nodemon api/index.js",
+    "start": "node api/index.js"
+  },
+  
+ 
 9.then you should switch your client side to root directory for pushing the code on github then you have to use command
 10.in client folder you have to use command mv .git ../
 11. then you have to move your client side gitignor file to root direcory so you dont have to upload modules in repository
