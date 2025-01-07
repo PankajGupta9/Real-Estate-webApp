@@ -1,20 +1,17 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
-import SignIn from './pages/SignIn';
-import SignUp from './pages/SignUp';
-import About from './pages/About';
-import Profile from './pages/Profile';
-import Header from './components/Header';
-import Practice from './pages/Practice';
-import PrivateRoute from './components/PrivateRoute';
-import CreateListing from './pages/CreateListing';
-import UpdateListing from './pages/updateListing';
-import Listing from './pages/Listing';
-import Search from './pages/Search';
+import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import Footer from './components/Footer';
+import Header from './components/Header';
+import PrivateRoute from './components/PrivateRoute';
+import About from './pages/About';
 import Contact from './pages/Contact';
 import DashboardLayout from './pages/DashboardLayout';
+import Home from './pages/Home';
+import Listing from './pages/Listing';
+import Practice from './pages/Practice';
+import Search from './pages/Search';
+import SignIn from './pages/SignIn';
+import SignUp from './pages/SignUp';
 
 const App = () => {
   const location = useLocation();
