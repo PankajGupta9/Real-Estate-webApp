@@ -106,7 +106,7 @@ const Practice = () => {
     setLoading(true);
     try {
       // Axios automatically stringifies the data and sets headers
-      const res = await axios.post('/api/auth/signup', formData);
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signup`, formData);
   
       const data = res.data; // Axios stores the response data under 'data'
   

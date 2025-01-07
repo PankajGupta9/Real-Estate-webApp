@@ -15,7 +15,7 @@ const Contact = ({ listing }) => {
   useEffect(() => {
     const fetchLandlord = async () => {
       try {
-        const res = await axios.get(`/api/user/${listing.userRef}`, {
+        const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/${listing.userRef}`, {
           headers: { Authorization: `Bearer ${currentUser?.token}` },
         });
         setLandlord(res.data); // Axios automatically parses JSON

@@ -13,7 +13,7 @@ const ShowListing = () => {
     const fetchListings = async () => {
       try {
         const res = await axios.get(
-          `/api/user/listings/${currentUser?.rest._id}`,
+          `${import.meta.env.VITE_BACKEND_URL}/api/user/listings/${currentUser?.rest._id}`,
           {
             headers: { Authorization: `Bearer ${currentUser?.token}` },
           }
@@ -33,7 +33,7 @@ const ShowListing = () => {
   // Handle listing deletion
   const handleListingDelete = async (listingId) => {
     try {
-      await axios.delete(`/api/listing/delete/${listingId}`, {
+      await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/listing/delete/${listingId}`, {
         headers: { Authorization: `Bearer ${currentUser?.token}` },
       });
       setListings((prev) => prev.filter((listing) => listing._id !== listingId));

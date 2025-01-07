@@ -21,7 +21,7 @@ const SignUp = () => {
     e.preventDefault();
     setLoading(true);
     try{
-      const res = await fetch('api/auth/signup',
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}api/auth/signup`,
         {
           method: 'POST',
           headers: {

@@ -36,7 +36,7 @@ const UpdateListing = () => {
   useEffect(() => {
     const fetchListings = async () => {
        const  listingId = params.listingId;
-       const res = await axios.get(`/api/listing/get/${listingId}`);
+       const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/listing/get/${listingId}`);
        // Axios directly provides the parsed response in `res.data`
        const data = res.data;
         setFormData(data);
@@ -150,7 +150,7 @@ const UpdateListing = () => {
       setLoading(true);
       setError(false);
       const listingId=params.listingId;
-      const res = await axios.post(`/api/listing/update/${listingId}`,listingData,{
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/listing/update/${listingId}`,listingData,{
         headers: { Authorization: `Bearer ${currentUser?.token}` },
       });
       alert("Product updated successfully");

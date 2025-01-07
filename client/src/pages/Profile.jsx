@@ -91,7 +91,7 @@ const Profile = () => {
 
     try {
       dispatch(updateUserStart());
-      const res = await axios.put(`/api/user/update/${currentUser?.rest?._id}`, userUpdateData, {
+      const res = await axios.put(`${import.meta.env.VITE_BACKEND_URL}/api/user/update/${currentUser?.rest?._id}`, userUpdateData, {
         headers: { Authorization: `Bearer ${currentUser?.token}` },
         
       });
@@ -112,7 +112,7 @@ const Profile = () => {
     try {
       dispatch(deleteUserStart());
   
-      const res = await axios.delete(`/api/user/delete/${userId}`, {
+      const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${userId}`, {
         headers: {
           Authorization: `Bearer ${currentUser?.token}`,
         },
@@ -145,7 +145,7 @@ const Profile = () => {
   const handleLogout = async () => {
     try{
   dispatch(signOutUserStart());
-  const res = await  fetch('/api/auth/signout');
+  const res = await  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signout`);
   const data = await res.json();
   if(data.success === false){
     dispatch(signOutUserFailure(data.message));
@@ -161,7 +161,7 @@ const Profile = () => {
 
 const fetchListings = async () => {
   try {
-    const res = await axios.get(`/api/user/listings/${currentUser?.rest._id}`, {
+    const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/listings/${currentUser?.rest._id}`, {
       headers: { Authorization: `Bearer ${currentUser?.token}` },
     });
     setListings(res.data);
@@ -176,7 +176,7 @@ const fetchListings = async () => {
 
 const handleListingDelete = async (listingId) => {
   try{
-   const res = await axios.delete(`/api/listing/delete/${listingId}`,{
+   const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/listing/delete/${listingId}`,{
     headers: { Authorization: `Bearer ${currentUser?.token}` },
    });
    setListings((prev) => prev.filter((listing) => listing._id !== listingId));

@@ -7,7 +7,7 @@ export default defineConfig({
     host: true,
     proxy: {
       '/api': {
-        target: 'https://realstate-app-practice.onrender.com',
+        // target: 'https://realstate-app-practice.onrender.com',
         changeOrigin: true,
         secure: false,
     },

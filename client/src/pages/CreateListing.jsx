@@ -131,7 +131,7 @@ const CreateListing = () => {
       }
       setLoading(true);
       setError(false);
-      const res = await axios.post('/api/listing/create',listingData,{
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/listing/create`,listingData,{
         headers: { Authorization: `Bearer ${currentUser?.token}` },
       });
       alert("Product created successfully");
