@@ -145,17 +145,16 @@
 
 
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import {useSelector} from 'react-redux';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { FaSearch } from 'react-icons/fa';
+import { IoArrowForwardOutline } from "react-icons/io5";
+import SwiperCore from 'swiper';
 import 'swiper/css/bundle';
 import { Navigation } from 'swiper/modules';
-import SwiperCore from 'swiper';
-import ListingItem from '../components/ListingItem';
 import banner from '../assets/banner.avif';
-import { IoArrowForwardOutline } from "react-icons/io5";
-import {FaSearch} from 'react-icons/fa'
+import ListingItem from '../components/ListingItem';
 
 
 

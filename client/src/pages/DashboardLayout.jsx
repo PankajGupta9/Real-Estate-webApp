@@ -2,7 +2,7 @@ import React from 'react';
 import Sidebar from '../components/SideBar';
 import Profile from './Profile';
 import CreateListing from './CreateListing';
-import UpdateListing from './updateListing';
+import UpdateListing from './UpdateListing';
 import { Routes, Route } from 'react-router-dom';
 import ShowListing from './ShowListing';
 

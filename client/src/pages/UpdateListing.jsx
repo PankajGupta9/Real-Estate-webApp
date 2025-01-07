@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
+import { useEffect, useState } from "react";
 import { useSelector } from 'react-redux';
-import { useNavigate, useParams} from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const UpdateListing = () => {
     const { currentUser } = useSelector((state) => state.user);
