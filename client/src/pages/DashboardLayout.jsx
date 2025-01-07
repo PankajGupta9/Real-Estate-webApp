@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../components/sideBar';
+import Sidebar from '../components/SideBar';
 import Profile from './Profile';
 import CreateListing from './CreateListing';
 import UpdateListing from './updateListing';
