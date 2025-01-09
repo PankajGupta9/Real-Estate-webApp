@@ -12,6 +12,7 @@ import Practice from './pages/Practice';
 import Search from './pages/Search';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import UpdateListing from './pages/UpdateListing';
 
 const App = () => {
   const location = useLocation();
@@ -30,6 +31,7 @@ const App = () => {
         <Route path="/search" element={<Search />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/practice" element={<Practice />} />
+        <Route path="/update-listing/:listingId" element={<UpdateListing />} />
         <Route path="/listing/:listingId" element={<Listing />} />
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard/*" element={<DashboardLayout />} />

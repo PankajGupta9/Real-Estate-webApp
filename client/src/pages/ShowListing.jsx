@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const ShowListing = () => {
   const [listings, setListings] = useState([]);
+  const navigate = useNavigate();
   const [showListingsError, setShowListingsError] = useState(false);
   const { currentUser } = useSelector((state) => state.user);
 
@@ -43,8 +44,12 @@ const ShowListing = () => {
     }
   };
 
+  const handleEdit = (listingId) => {
+    navigate(`/update-listing/${listingId}`);
+  };
+
   return (
-    <div className="p-6 bg-gray-50  m-auto">
+    <div className="p-6 bg-gray-50 m-auto">
       {showListingsError && (
         <p className="text-red-600 text-center mb-4">
           Error fetching listings! Please try again.
@@ -88,12 +93,12 @@ const ShowListing = () => {
                   >
                     Delete
                   </button>
-                  <Link
-                    to={`/update-listing/${listing._id}`}
+                  <button
+                    onClick={() => handleEdit(listing._id)}
                     className="text-blue-600 hover:text-blue-800 text-sm"
                   >
                     Edit
-                  </Link>
+                  </button>
                 </td>
               </tr>
             ))}

@@ -129,7 +129,7 @@ const Search = () => {
 
 <div className="bg-white p-7 border border-slate-500 rounded-xl m-5  h-[600px">
  <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
-     {/* <div className="flex items-center gap-2">
+     <div className="flex items-center gap-2">
          <label 
          className='whitespace-nowrap font-semibold'>
          Search Term:</label>
@@ -140,7 +140,7 @@ const Search = () => {
          value={sidebardata.searchTerm}
          onChange={handleChange}
           />
-     </div> */}
+     </div>
      <div className="flex flex-col gap-2 flex-wrap">
          <label className='font-semibold'>Type:</label>
          <div className="flex gap-2">

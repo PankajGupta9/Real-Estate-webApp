@@ -2,7 +2,6 @@ import React from 'react';
 import Sidebar from '../components/SideBar';
 import Profile from './Profile';
 import CreateListing from './CreateListing';
-import UpdateListing from './UpdateListing';
 import { Routes, Route } from 'react-router-dom';
 import ShowListing from './ShowListing';
 
@@ -20,7 +19,6 @@ const DashboardLayout = () => {
           <Route path="/profile" element={<Profile />} />
           <Route path="/show-listing" element={<ShowListing />} />
           <Route path="/create-listing" element={<CreateListing />} />
-          <Route path="/update-listing/:listingId" element={<UpdateListing />} />
         </Routes>
       </div>
     </div>
