@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import {FaSearch} from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom';
 import {useSelector,useDispatch} from 'react-redux';
 import newLogo from '../assets/newLogo.png';
@@ -42,6 +41,13 @@ const Header = () => {
     setDropdownVisible(!dropdownVisible); // toggl dropdown visible
   }
  
+
+
+  useEffect(() => {
+    // Hide the dropdown when the route changes
+    setDropdownVisible(false);
+  }, [location.pathname]); // Run this effect when the path changes
+
 
     const handleLogout = async () => {
       try{
@@ -135,7 +141,7 @@ const Header = () => {
                            </Link>
                           <Link to={'/dashboard'} className='text-slate-300 py-2 hover:text-white cursor-pointer'>Dashboard</Link>
                           <Link to='/'>
-                          <button onClick={handleLogout} className='bg-red-700 rounded-lg text-slate-300 p-2 hover:opacity-75 cursor-pointer'>
+                          <button onClick={handleLogout} className='font-bold rounded-lg text-slate-300 p-1 hover:opacity-75 cursor-pointer'>
                              Sign Out
                           </button>
                           </Link>

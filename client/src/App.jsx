@@ -13,6 +13,7 @@ import Search from './pages/Search';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import UpdateListing from './pages/UpdateListing';
+import Profile from './pages/Profile';
 
 const App = () => {
   const location = useLocation();
@@ -34,6 +35,7 @@ const App = () => {
         <Route path="/update-listing/:listingId" element={<UpdateListing />} />
         <Route path="/listing/:listingId" element={<Listing />} />
         <Route element={<PrivateRoute />}>
+          <Route path="/profile" element={<Profile/>} />
           <Route path="/dashboard/*" element={<DashboardLayout />} />
         </Route>
       </Routes>
