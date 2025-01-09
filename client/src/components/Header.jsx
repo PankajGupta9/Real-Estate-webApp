@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import {FaSearch} from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import {useSelector,useDispatch} from 'react-redux';
 import newLogo from '../assets/newLogo.png';
 import { CiUser } from "react-icons/ci";
+import { 
+  signOutUserStart,
+  signOutUserFailure,
+  signOutUserSuccess,
+
+} from '../redux/user/userSlice';
+
 
 
 
@@ -12,6 +19,8 @@ const Header = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +41,25 @@ const Header = () => {
   const handleProfileClick = () =>{
     setDropdownVisible(!dropdownVisible); // toggl dropdown visible
   }
+ 
 
+    const handleLogout = async () => {
+      try{
+    dispatch(signOutUserStart());
+    const res = await  fetch(`${import.meta.env.VITE_BACKEND_URL}/api/auth/signout`);
+    const data = await res.json();
+    if(data.success === false){
+      dispatch(signOutUserFailure(data.message));  
+      return;
+    }
+    dispatch(signOutUserSuccess(data));
+    setDropdownVisible(false); // Close the dropdown
+    navigate('/'); // Redirect to home page
+    }catch(error){
+      dispatch(signOutUserFailure(data.message));    
+    }
+  }
+  
 
   return (
     <header className='bg-white shadow-md top-0 z-20 sticky'>
@@ -92,7 +119,6 @@ const Header = () => {
                     {dropdownVisible && (
                     <div className='absolute right-0 mt-2 w-[200px] bg-slate-900 text-white  shadow-lg rounded-md p-2'>
                         <ul className='flex flex-col gap-2'>
-                          {/* <Link to={'/profile'}>Profile</Link> */}
                           <Link to='/profile'>
                           <div className='flex flex-col items-center gap-2'>
                           {currentUser ? (
@@ -101,14 +127,18 @@ const Header = () => {
                              alt="" />
                            ) : (''
                            )}
+                           {/* <Link to='/profile'> */}
                            <span className='text-blue-500 font-semibold hover:opacity-75'>Profile</span>
-
+                           {/* </Link> */}
                           </div> 
 
                            </Link>
-                          <Link className='text-slate-300 py-2 hover:text-white cursor-pointer'>List Property</Link>
                           <Link to={'/dashboard'} className='text-slate-300 py-2 hover:text-white cursor-pointer'>Dashboard</Link>
-                          <Link className='text-slate-300 py-2 hover:text-white cursor-pointer'>Listed Property</Link>
+                          <Link to='/'>
+                          <button onClick={handleLogout} className='bg-red-700 rounded-lg text-slate-300 p-2 hover:opacity-75 cursor-pointer'>
+                             Sign Out
+                          </button>
+                          </Link>
                         </ul>
                     </div>
 
