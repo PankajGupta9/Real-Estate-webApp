@@ -108,19 +108,34 @@ const Profile = () => {
   };
 
   const handleDeleteUser = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
+  
+    if (!confirmDelete) {
+      return; // Exit if the user cancels
+    }
+  
     try {
       dispatch(deleteUserStart());
-      const res = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${currentUser?.rest?._id}`, {
-        headers: { Authorization: `Bearer ${currentUser?.token}` },
-      });
+      const res = await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/delete/${currentUser?.rest?._id}`,
+        {
+          headers: { Authorization: `Bearer ${currentUser?.token}` },
+        }
+      );
       dispatch(deleteUserSuccess(res.data));
+      toast.success("Your account has been successfully deleted.", { theme: "dark" });
     } catch (error) {
-      dispatch(deleteUserFailure(
-        error.response ? error.response.data.message : error.message
-      ));
+      dispatch(
+        deleteUserFailure(
+          error.response ? error.response.data.message : error.message
+        )
+      );
+      toast.error("Failed to delete your account. Please try again.", { theme: "dark" });
     }
   };
-
+  
   return (
     <div className="p-3 max-w-lg mx-auto bg-white rounded-lg">
       <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>

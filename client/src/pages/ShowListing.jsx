@@ -33,6 +33,14 @@ const ShowListing = () => {
 
   // Handle listing deletion
   const handleListingDelete = async (listingId) => {
+    const confirmDeleteProduct = window.confirm(
+      "Are you sure you want to delete your Product ? This action cannot be undo."
+    );
+  
+    if (!confirmDeleteProduct) {
+      return; // Exit if the user cancels
+    }
+
     try {
       await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/listing/delete/${listingId}`, {
         headers: { Authorization: `Bearer ${currentUser?.token}` },
